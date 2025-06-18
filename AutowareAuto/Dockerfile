@@ -85,11 +85,11 @@ RUN apt-get install -y -q \
         libboost1.71-dev=1.71.0-6ubuntu6 \
         libboost1.71-tools-dev=1.71.0-6ubuntu6
 
-# add ros distro to apt
-# tag: foxy/2023-06-20
-RUN curl -sSL https://github.com/ros/rosdistro/raw/refs/tags/foxy/2023-06-20/ros.key -o /usr/share/keyrings/ros-archive-keyring.gpg
-RUN echo "deb [signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu focal main" \
-    | tee /etc/apt/sources.list.d/ros2.list
+# add ros2 foxy snapshot to apt
+# setup keys
+RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 4B63CF8FDE49746E98FA01DDAD19BAB3CBF125EA
+# setup sources.list
+RUN echo "deb http://snapshots.ros.org/foxy/final/ubuntu focal main" > /etc/apt/sources.list.d/ros2-snapshots.list
 RUN apt-get update -q
 
 # ROS depends on an upgraded version of libssl1.1, but 1.1.1f-1ubuntu2.24 breaks
